@@ -57,9 +57,11 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+					<finalName>e-hospital-app</finalName>
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>e-hospital-app</finalName>
 	</build>
 
 </project>
