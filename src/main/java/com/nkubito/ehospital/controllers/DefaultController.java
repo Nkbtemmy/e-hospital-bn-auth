@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 
 @RestController
 public class DefaultController {
-	@GetMapping(path = "/")
+	@GetMapping(path = "/api/")
 	public ResponseEntity<Response> message() {
 		return ResponseEntity.ok(
 				Response.builder()

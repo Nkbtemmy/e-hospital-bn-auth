@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 public class AuthController {
     @PostMapping(path = "/register")
     public ResponseEntity<Response> register(@RequestBody User user) {
