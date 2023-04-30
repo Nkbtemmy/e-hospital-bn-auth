@@ -54,19 +54,6 @@ public enum Users {
         return userList;
     }
 
-    public List<User> getPhysicians() {
-        List<User> physicianList = new ArrayList<>();
-        Map<String, User> userMap = Users.INSTANCE.getUsers();
-        for (Map.Entry<String, User> entry : userMap.entrySet()) {
-            User user = entry.getValue();
-            if (user.getRole() == Role.Physician) {
-                physicianList.add(user);
-            }
-        }
-        return physicianList;
-    }
-    
-
     public List<User> getUserByRole(String role) {
         List<User> filteredUsers = new ArrayList<>();
         Map<String, User> userMap = Users.INSTANCE.getUsers();
