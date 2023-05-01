@@ -39,11 +39,15 @@ public enum Users {
 
     private boolean contains(User user) {
         return switch (user.getRole()) {
-            case Physician -> users.keySet().stream().anyMatch(u -> u.equals(user.getEmail()));
-            case Pharmacist -> users.keySet().stream().anyMatch(u -> u.equals(user.getPhoneNumber()));
-            case Patient -> users.keySet().stream().anyMatch(u -> u.equals(user.getUsername()));
+            case Physician ->
+                    users.keySet().stream().anyMatch(u -> u.equals(user.getEmail()));
+            case Pharmacist ->
+                    users.keySet().stream().anyMatch(u -> u.equals(user.getPhoneNumber()));
+            case Patient ->
+                    users.keySet().stream().anyMatch(u -> u.equals(user.getUsername()));
         };
     }
+
     public List<User> retreiveUser() {
         List<User> userList = new ArrayList<>();
         Map<String, User> userMap = Users.INSTANCE.getUsers();
@@ -54,19 +58,8 @@ public enum Users {
         return userList;
     }
 
-    public List<User> getUserByRole(String role) {
-        List<User> filteredUsers = new ArrayList<>();
-        Map<String, User> userMap = Users.INSTANCE.getUsers();
-
-        for (Map.Entry<String, User> entry : userMap.entrySet()) {
-            User user = entry.getValue();
-
-            if (user.getRole().toString().equalsIgnoreCase(role)) {
-                filteredUsers.add(user);
-            }
-        }
-
-        return filteredUsers;
+    public List<User> getUserByRole(Role role) {
+        return users.values().stream().filter(user -> user.getRole().equals(role)).toList();
     }
-    
+
 }
