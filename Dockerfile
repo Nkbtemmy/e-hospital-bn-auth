@@ -6,6 +6,6 @@ RUN mvn clean package -Dmaven.test.skip=true
 
 # Stage 2: Create the final Docker image
 FROM openjdk:17-jdk
-COPY --from=build /home/app/target/*.jar tariffmanager.jar
+COPY --from=build /home/app/target/*.jar e-hospital-bn-auth.jar
 EXPOSE 9090
-ENTRYPOINT ["java", "-jar", "tariffmanager.jar"]
+ENTRYPOINT ["java", "-jar", "e-hospital-bn-auth.jar"]
