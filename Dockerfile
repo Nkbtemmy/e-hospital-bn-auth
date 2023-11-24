@@ -1,24 +1,11 @@
-FROM maven:3.9.1-sapmachine-11 AS build
-
-# Install OpenJDK 17
-RUN apt-get update && \
-    apt-get install -y openjdk-17-jdk
-
-# Set the JAVA_HOME environment variable
-ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/
-
-# Set the PATH environment variable
-ENV PATH=$JAVA_HOME/bin:$PATH
-
+FROM maven:3.8.3-openjdk-17 AS build
+COPY src /home/app/src
+COPY pom.xml /home/app
 WORKDIR /home/app
-COPY pom.xml .
-RUN mvn dependency:go-offline
-COPY src/ ./src/
-RUN mvn clean package
+RUN mvn clean package -Dmaven.test.skip=true
 
-# Package stage
-FROM openjdk:21-slim-buster
-
-COPY --from=build /home/app/target/*.jar app.jar
-EXPOSE 8080
-ENTRYPOINT ["java","-jar","app.jar"]
+# Stage 2: Create the final Docker image
+FROM openjdk:17-jdk
+COPY --from=build /home/app/target/*.jar tariffmanager.jar
+EXPOSE 9090
+ENTRYPOINT ["java", "-jar", "tariffmanager.jar"]
