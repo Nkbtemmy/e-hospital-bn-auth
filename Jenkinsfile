@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'hospital'
+        DOCKER_IMAGE = 'thunderzeye/hospital-app'
     }
 
     stages {
@@ -14,5 +14,16 @@ pipeline {
                 }
             }
         }
+        stage('Push Docker Image to Docker Hub') {
+            steps {
+                script {
+                    // Push the Docker image to Docker Hub
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials-id') {
+                        def dockerImage = docker.image("${DOCKER_IMAGE}:${env.BUILD_NUMBER}")
+                        dockerImage.push()
+                }
+            }
+      }
+            
     }
 }
